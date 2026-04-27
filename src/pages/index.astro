@@ -17,19 +17,6 @@ function formatYear(date: Date) {
   return date.getFullYear().toString();
 }
 
-// Career timeline data
-const careerData = lang === 'cs' ? [
-  { year: '2024', title: 'CTO & Co-Founder', company: 'Elin.ai', description: 'AI pro duševní zdraví' },
-  { year: '2022', title: 'AI Consultant', company: 'O2 Czech Republic', description: 'LLM adopce v telco' },
-  { year: '2020', title: 'PhD Researcher', company: 'VŠE Praha', description: 'AI & Speech Recognition' },
-  { year: '2018', title: 'Data Scientist', company: 'Blindspot Solutions', description: 'ML v praxi' },
-] : [
-  { year: '2024', title: 'CTO & Co-Founder', company: 'Elin.ai', description: 'AI for mental health' },
-  { year: '2022', title: 'AI Consultant', company: 'O2 Czech Republic', description: 'LLM adoption in telco' },
-  { year: '2020', title: 'PhD Researcher', company: 'VŠE Prague', description: 'AI & Speech Recognition' },
-  { year: '2018', title: 'Data Scientist', company: 'Blindspot Solutions', description: 'ML in production' },
-];
-
 // Stats data
 const statsData = lang === 'cs' ? [
   { value: 8, suffix: '+', label: 'let v AI' },
@@ -78,9 +65,8 @@ const identities = lang === 'cs' ? [
               <span class="identity-cursor">|</span>
             </span>
           </h1>
-          <p class="hero-description" data-text={t('hero.description')}>
-            <span class="typing-text"></span>
-            <span class="typing-cursor">|</span>
+          <p class="hero-description">
+            {t('hero.description')}
           </p>
           <div style="display: flex; gap: 32px; align-items: center; flex-wrap: wrap;">
             <a href={getLocalizedPath('/contact', lang)} class="btn-link-primary">
@@ -115,28 +101,6 @@ const identities = lang === 'cs' ? [
           <div class="stat-item">
             <span class="stat-value" data-value={stat.value} data-suffix={stat.suffix}>0{stat.suffix}</span>
             <span class="stat-label">{stat.label}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── CAREER TIMELINE ───────────────────────────────── -->
-  <section class="timeline-section">
-    <div class="container">
-      <p class="label" style="margin: 0 0 48px 0;">{lang === 'cs' ? 'Kariéra' : 'Career'}</p>
-      
-      <div class="timeline">
-        {careerData.map((item, index) => (
-          <div class="timeline-item" data-index={index}>
-            <div class="timeline-line"></div>
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <span class="timeline-year">{item.year}</span>
-              <h3 class="timeline-title">{item.title}</h3>
-              <p class="timeline-company">{item.company}</p>
-              <p class="timeline-description">{item.description}</p>
-            </div>
           </div>
         ))}
       </div>
@@ -350,93 +314,6 @@ const identities = lang === 'cs' ? [
     color: #6B6B6B;
   }
   
-  /* Timeline */
-  .timeline-section {
-    padding: 80px 0 100px;
-    border-bottom: 1px solid #EAEAEA;
-    background: #FAFAFA;
-  }
-  
-  .timeline {
-    position: relative;
-    padding-left: 40px;
-  }
-  
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 8px;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: #EAEAEA;
-  }
-  
-  .timeline-item {
-    position: relative;
-    padding-bottom: 48px;
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  
-  .timeline-item.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  
-  .timeline-item:last-child {
-    padding-bottom: 0;
-  }
-  
-  .timeline-dot {
-    position: absolute;
-    left: -36px;
-    top: 4px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #FAFAFA;
-    border: 2px solid #1E4D6B;
-    transition: transform 0.3s ease, background 0.3s ease;
-  }
-  
-  .timeline-item:hover .timeline-dot {
-    transform: scale(1.3);
-    background: #1E4D6B;
-  }
-  
-  .timeline-year {
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    color: #1E4D6B;
-    text-transform: uppercase;
-  }
-  
-  .timeline-title {
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #1A1A1A;
-    margin: 8px 0 4px 0;
-    letter-spacing: -0.01em;
-  }
-  
-  .timeline-company {
-    font-size: 0.85rem;
-    font-weight: 400;
-    color: #6B6B6B;
-    margin: 0 0 8px 0;
-  }
-  
-  .timeline-description {
-    font-size: 0.85rem;
-    font-weight: 300;
-    color: #999999;
-    margin: 0;
-    line-height: 1.6;
-  }
-  
   /* Expertise */
   .expertise-grid {
     display: grid;
@@ -570,25 +447,6 @@ const identities = lang === 'cs' ? [
   
   setInterval(rotateIdentity, 3000);
   
-  // Typing effect for description
-  const typingElement = document.querySelector('.typing-text') as HTMLElement;
-  const descriptionElement = document.querySelector('.hero-description');
-  const descriptionText = descriptionElement?.getAttribute('data-text') || '';
-  let charIndex = 0;
-  
-  function typeText() {
-    if (!typingElement) return;
-    
-    if (charIndex < descriptionText.length) {
-      typingElement.textContent += descriptionText.charAt(charIndex);
-      charIndex++;
-      setTimeout(typeText, 30);
-    }
-  }
-  
-  // Start typing after a short delay
-  setTimeout(typeText, 500);
-  
   // Animated counter for stats
   const statElements = document.querySelectorAll('.stat-value');
   
@@ -624,19 +482,6 @@ const identities = lang === 'cs' ? [
   }, { threshold: 0.5 });
   
   statElements.forEach(el => statsObserver.observe(el));
-  
-  // Intersection Observer for timeline
-  const timelineObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.2 });
-  
-  document.querySelectorAll('.timeline-item').forEach(el => {
-    timelineObserver.observe(el);
-  });
   
   // Parallax effect
   const parallaxElements = document.querySelectorAll('.parallax-element');
