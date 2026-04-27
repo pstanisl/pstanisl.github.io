@@ -1,9 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/translations';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+// Get featured talks for homepage (sorted by date, most recent first)
+const allTalks = await getCollection('speaking');
+const featuredTalks = allTalks
+  .filter(talk => talk.data.featured)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 2);
+
+function formatYear(date: Date) {
+  return date.getFullYear().toString();
+}
 ---
 
 <BaseLayout title={`${t('hero.title')} — ${t('hero.subtitle')}`}>
@@ -155,55 +167,32 @@ const t = useTranslations(lang);
 
       <div style="display: flex; flex-direction: column; gap: 0;">
 
-        <div class="activity-item">
-          <div class="activity-meta">
-            <span class="label" style="color: #1E4D6B;">{t('type.podcast')}</span>
-            <span class="mono" style="display: block; margin-top: 4px;">2024</span>
+        {featuredTalks.map((talk) => (
+          <div class="activity-item">
+            <div class="activity-meta">
+              <span class="label" style="color: #1E4D6B;">{t(`type.${talk.data.type}` as any)}</span>
+              <span class="mono" style="display: block; margin-top: 4px;">{formatYear(talk.data.date)}</span>
+            </div>
+            <div class="activity-content">
+              <h3 style="
+                font-size: 1rem;
+                font-weight: 400;
+                color: #1A1A1A;
+                margin: 0 0 8px 0;
+                letter-spacing: -0.01em;
+              ">{talk.data.title}</h3>
+              <p style="
+                font-size: 0.85rem;
+                font-weight: 300;
+                color: #6B6B6B;
+                line-height: 1.7;
+                margin: 0;
+              ">
+                {talk.data.description}
+              </p>
+            </div>
           </div>
-          <div class="activity-content">
-            <h3 style="
-              font-size: 1rem;
-              font-weight: 400;
-              color: #1A1A1A;
-              margin: 0 0 8px 0;
-              letter-spacing: -0.01em;
-            ">AI Adoption in Enterprise</h3>
-            <p style="
-              font-size: 0.85rem;
-              font-weight: 300;
-              color: #6B6B6B;
-              line-height: 1.7;
-              margin: 0;
-            ">
-              Discussion on practical strategies for implementing AI in large organizations.
-            </p>
-          </div>
-        </div>
-
-        <div class="activity-item">
-          <div class="activity-meta">
-            <span class="label" style="color: #1E4D6B;">{t('type.talk')}</span>
-            <span class="mono" style="display: block; margin-top: 4px;">2024</span>
-          </div>
-          <div class="activity-content">
-            <h3 style="
-              font-size: 1rem;
-              font-weight: 400;
-              color: #1A1A1A;
-              margin: 0 0 8px 0;
-              letter-spacing: -0.01em;
-            ">Building AI-First Products</h3>
-            <p style="
-              font-size: 0.85rem;
-              font-weight: 300;
-              color: #6B6B6B;
-              line-height: 1.7;
-              margin: 0;
-            ">
-              Conference presentation on the challenges and lessons from building Elin.ai.
-            </p>
-          </div>
-        </div>
+        ))}
 
       </div>
 
