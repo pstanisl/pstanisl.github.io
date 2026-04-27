@@ -16,12 +16,53 @@ const featuredTalks = allTalks
 function formatYear(date: Date) {
   return date.getFullYear().toString();
 }
+
+// Career timeline data
+const careerData = lang === 'cs' ? [
+  { year: '2024', title: 'CTO & Co-Founder', company: 'Elin.ai', description: 'AI pro duševní zdraví' },
+  { year: '2022', title: 'AI Consultant', company: 'O2 Czech Republic', description: 'LLM adopce v telco' },
+  { year: '2020', title: 'PhD Researcher', company: 'VŠE Praha', description: 'AI & Speech Recognition' },
+  { year: '2018', title: 'Data Scientist', company: 'Blindspot Solutions', description: 'ML v praxi' },
+] : [
+  { year: '2024', title: 'CTO & Co-Founder', company: 'Elin.ai', description: 'AI for mental health' },
+  { year: '2022', title: 'AI Consultant', company: 'O2 Czech Republic', description: 'LLM adoption in telco' },
+  { year: '2020', title: 'PhD Researcher', company: 'VŠE Prague', description: 'AI & Speech Recognition' },
+  { year: '2018', title: 'Data Scientist', company: 'Blindspot Solutions', description: 'ML in production' },
+];
+
+// Stats data
+const statsData = lang === 'cs' ? [
+  { value: 8, suffix: '+', label: 'let v AI' },
+  { value: 20, suffix: '+', label: 'přednášek' },
+  { value: 1, suffix: '', label: 'PhD' },
+  { value: 50, suffix: '+', label: 'projektů' },
+] : [
+  { value: 8, suffix: '+', label: 'years in AI' },
+  { value: 20, suffix: '+', label: 'talks given' },
+  { value: 1, suffix: '', label: 'PhD' },
+  { value: 50, suffix: '+', label: 'projects' },
+];
+
+// Rotating identities
+const identities = lang === 'cs' ? [
+  'AI Leader',
+  'CTO @ Elin.ai',
+  'PhD Výzkumník',
+  'AI Konzultant',
+  'Speaker',
+] : [
+  'AI Leader',
+  'CTO @ Elin.ai',
+  'PhD Researcher',
+  'AI Consultant',
+  'Speaker',
+];
 ---
 
 <BaseLayout title={`${t('hero.title')} — ${t('hero.subtitle')}`}>
 
   <!-- ─── HERO ─────────────────────────────────────────── -->
-  <section style="padding: 80px 0 100px; border-bottom: 1px solid #EAEAEA;">
+  <section class="hero-section">
     <div class="container">
       <div class="hero-layout">
 
@@ -30,26 +71,16 @@ function formatYear(date: Date) {
           <p class="label" style="margin: 0 0 28px 0; color: #1E4D6B;">
             {t('hero.subtitle')}
           </p>
-          <h1 style="
-            font-size: 2.75rem;
-            font-weight: 300;
-            letter-spacing: -0.01em;
-            line-height: 1.25;
-            color: #1A1A1A;
-            margin: 0 0 24px 0;
-          ">
+          <h1 class="hero-title">
             {t('hero.name.line1')}<br />
-            <span style="color: #1E4D6B;">{t('hero.name.line2')}</span>
+            <span class="rotating-identity" data-identities={JSON.stringify(identities)}>
+              <span class="identity-text">{identities[0]}</span>
+              <span class="identity-cursor">|</span>
+            </span>
           </h1>
-          <p style="
-            font-size: 1rem;
-            font-weight: 300;
-            color: #6B6B6B;
-            line-height: 1.8;
-            margin: 0 0 40px 0;
-            max-width: 420px;
-          ">
-            {t('hero.description')}
+          <p class="hero-description" data-text={t('hero.description')}>
+            <span class="typing-text"></span>
+            <span class="typing-cursor">|</span>
           </p>
           <div style="display: flex; gap: 32px; align-items: center; flex-wrap: wrap;">
             <a href={getLocalizedPath('/contact', lang)} class="btn-link-primary">
@@ -61,30 +92,14 @@ function formatYear(date: Date) {
           </div>
         </div>
 
-        <!-- Profile photo placeholder -->
-        <div class="hero-photo">
-          <div style="
-            width: 180px;
-            height: 180px;
-            border: 1px solid #EAEAEA;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background-color: #F5F5F5;
-          ">
+        <!-- Profile photo placeholder with parallax -->
+        <div class="hero-photo parallax-element" data-speed="0.05">
+          <div class="photo-frame">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CCCCCC" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
               <circle cx="12" cy="7" r="4"/>
             </svg>
-            <span style="
-              font-size: 10px;
-              font-weight: 400;
-              letter-spacing: 0.15em;
-              text-transform: uppercase;
-              color: #CCCCCC;
-            ">Photo</span>
+            <span class="photo-label">Photo</span>
           </div>
         </div>
 
@@ -92,72 +107,69 @@ function formatYear(date: Date) {
     </div>
   </section>
 
+  <!-- ─── STATS ─────────────────────────────────────────── -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        {statsData.map((stat) => (
+          <div class="stat-item">
+            <span class="stat-value" data-value={stat.value} data-suffix={stat.suffix}>0{stat.suffix}</span>
+            <span class="stat-label">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CAREER TIMELINE ───────────────────────────────── -->
+  <section class="timeline-section">
+    <div class="container">
+      <p class="label" style="margin: 0 0 48px 0;">{lang === 'cs' ? 'Kariéra' : 'Career'}</p>
+      
+      <div class="timeline">
+        {careerData.map((item, index) => (
+          <div class="timeline-item" data-index={index}>
+            <div class="timeline-line"></div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-year">{item.year}</span>
+              <h3 class="timeline-title">{item.title}</h3>
+              <p class="timeline-company">{item.company}</p>
+              <p class="timeline-description">{item.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- ─── WHAT I DO ─────────────────────────────────────── -->
   <section style="padding: 80px 0 100px; border-bottom: 1px solid #EAEAEA;">
     <div class="container">
-
       <p class="label" style="margin: 0 0 48px 0;">{t('whatido.title')}</p>
 
       <div class="expertise-grid">
-        <div class="expertise-item">
-          <h3 style="
-            font-size: 1rem;
-            font-weight: 400;
-            letter-spacing: -0.01em;
-            color: #1A1A1A;
-            margin: 0 0 10px 0;
-          ">{t('whatido.strategy.title')}</h3>
-          <p style="
-            font-size: 0.85rem;
-            font-weight: 300;
-            color: #6B6B6B;
-            line-height: 1.7;
-            margin: 0;
-          ">{t('whatido.strategy.description')}</p>
+        <div class="expertise-item parallax-element" data-speed="-0.02">
+          <h3>{t('whatido.strategy.title')}</h3>
+          <p>{t('whatido.strategy.description')}</p>
         </div>
 
-        <div class="expertise-item">
-          <h3 style="
-            font-size: 1rem;
-            font-weight: 400;
-            letter-spacing: -0.01em;
-            color: #1A1A1A;
-            margin: 0 0 10px 0;
-          ">{t('whatido.leadership.title')}</h3>
-          <p style="
-            font-size: 0.85rem;
-            font-weight: 300;
-            color: #6B6B6B;
-            line-height: 1.7;
-            margin: 0;
-          ">{t('whatido.leadership.description')}</p>
+        <div class="expertise-item parallax-element" data-speed="0.02">
+          <h3>{t('whatido.leadership.title')}</h3>
+          <p>{t('whatido.leadership.description')}</p>
         </div>
 
-        <div class="expertise-item">
-          <h3 style="
-            font-size: 1rem;
-            font-weight: 400;
-            letter-spacing: -0.01em;
-            color: #1A1A1A;
-            margin: 0 0 10px 0;
-          ">{t('whatido.research.title')}</h3>
-          <p style="
-            font-size: 0.85rem;
-            font-weight: 300;
-            color: #6B6B6B;
-            line-height: 1.7;
-            margin: 0;
-          ">{t('whatido.research.description')}</p>
+        <div class="expertise-item parallax-element" data-speed="-0.01">
+          <h3>{t('whatido.research.title')}</h3>
+          <p>{t('whatido.research.description')}</p>
         </div>
       </div>
-
     </div>
   </section>
 
   <!-- ─── RECENT ACTIVITY ───────────────────────────────── -->
   <section style="padding: 80px 0 100px; border-bottom: 1px solid #EAEAEA;">
     <div class="container">
-
       <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 48px; flex-wrap: wrap; gap: 12px;">
         <p class="label" style="margin: 0;">{t('recent.title')}</p>
         <a href={getLocalizedPath('/speaking', lang)} class="btn-link" style="font-size: 11px;">
@@ -166,7 +178,6 @@ function formatYear(date: Date) {
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 0;">
-
         {featuredTalks.map((talk) => (
           <div class="activity-item">
             <div class="activity-meta">
@@ -174,28 +185,12 @@ function formatYear(date: Date) {
               <span class="mono" style="display: block; margin-top: 4px;">{formatYear(talk.data.date)}</span>
             </div>
             <div class="activity-content">
-              <h3 style="
-                font-size: 1rem;
-                font-weight: 400;
-                color: #1A1A1A;
-                margin: 0 0 8px 0;
-                letter-spacing: -0.01em;
-              ">{talk.data.title}</h3>
-              <p style="
-                font-size: 0.85rem;
-                font-weight: 300;
-                color: #6B6B6B;
-                line-height: 1.7;
-                margin: 0;
-              ">
-                {talk.data.description}
-              </p>
+              <h3>{talk.data.title}</h3>
+              <p>{talk.data.description}</p>
             </div>
           </div>
         ))}
-
       </div>
-
     </div>
   </section>
 
@@ -203,15 +198,7 @@ function formatYear(date: Date) {
   <section style="padding: 80px 0 100px;">
     <div class="container">
       <p class="label" style="margin: 0 0 24px 0; color: #999999;">{t('cta.title')}</p>
-      <p style="
-        font-size: 1.4rem;
-        font-weight: 300;
-        color: #1A1A1A;
-        letter-spacing: -0.01em;
-        line-height: 1.5;
-        margin: 0 0 40px 0;
-        max-width: 480px;
-      ">
+      <p class="cta-text">
         {t('cta.description')}
       </p>
       <a href={getLocalizedPath('/contact', lang)} class="btn-link-primary">
@@ -223,44 +210,328 @@ function formatYear(date: Date) {
 </BaseLayout>
 
 <style>
-  /* Hero layout */
+  /* Hero */
+  .hero-section {
+    padding: 80px 0 100px;
+    border-bottom: 1px solid #EAEAEA;
+    background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
+  }
+  
   .hero-layout {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 48px;
   }
+  
   .hero-text { flex: 1; }
-  .hero-photo { flex-shrink: 0; padding-top: 8px; }
-
-  /* Expertise grid */
+  
+  .hero-title {
+    font-size: 2.75rem;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: #1A1A1A;
+    margin: 0 0 24px 0;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #6B6B6B;
+    line-height: 1.8;
+    margin: 0 0 40px 0;
+    max-width: 420px;
+    min-height: 3.6em;
+  }
+  
+  .hero-photo {
+    flex-shrink: 0;
+    padding-top: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .photo-frame {
+    width: 180px;
+    height: 180px;
+    border: 1px solid #EAEAEA;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #F5F5F5;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  }
+  
+  .photo-frame:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 40px rgba(30, 77, 107, 0.1);
+  }
+  
+  .photo-label {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #CCCCCC;
+  }
+  
+  /* Rotating Identity */
+  .rotating-identity {
+    color: #1E4D6B;
+    display: inline-block;
+    position: relative;
+  }
+  
+  .identity-text {
+    display: inline-block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .identity-cursor {
+    animation: blink 1s infinite;
+    font-weight: 200;
+    opacity: 1;
+  }
+  
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+  
+  /* Typing cursor */
+  .typing-cursor {
+    color: #1E4D6B;
+    animation: blink 1s infinite;
+    font-weight: 200;
+  }
+  
+  /* Stats */
+  .stats-section {
+    padding: 60px 0;
+    border-bottom: 1px solid #EAEAEA;
+    background: #FFFFFF;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    text-align: center;
+  }
+  
+  .stat-item {
+    padding: 24px 16px;
+    border: 1px solid #EAEAEA;
+    border-radius: 4px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .stat-item:hover {
+    transform: translateY(-4px);
+    border-color: #1E4D6B;
+  }
+  
+  .stat-value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #1E4D6B;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  
+  .stat-label {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6B6B6B;
+  }
+  
+  /* Timeline */
+  .timeline-section {
+    padding: 80px 0 100px;
+    border-bottom: 1px solid #EAEAEA;
+    background: #FAFAFA;
+  }
+  
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+  
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #EAEAEA;
+  }
+  
+  .timeline-item {
+    position: relative;
+    padding-bottom: 48px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+  
+  .timeline-dot {
+    position: absolute;
+    left: -36px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #FAFAFA;
+    border: 2px solid #1E4D6B;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  
+  .timeline-item:hover .timeline-dot {
+    transform: scale(1.3);
+    background: #1E4D6B;
+  }
+  
+  .timeline-year {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: #1E4D6B;
+    text-transform: uppercase;
+  }
+  
+  .timeline-title {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #1A1A1A;
+    margin: 8px 0 4px 0;
+    letter-spacing: -0.01em;
+  }
+  
+  .timeline-company {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #6B6B6B;
+    margin: 0 0 8px 0;
+  }
+  
+  .timeline-description {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #999999;
+    margin: 0;
+    line-height: 1.6;
+  }
+  
+  /* Expertise */
   .expertise-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 48px 64px;
   }
+  
   .expertise-item:last-child {
     grid-column: 1 / -1;
   }
-
-  /* Activity items */
+  
+  .expertise-item h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: #1A1A1A;
+    margin: 0 0 10px 0;
+  }
+  
+  .expertise-item p {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #6B6B6B;
+    line-height: 1.7;
+    margin: 0;
+  }
+  
+  /* Activity */
   .activity-item {
     display: grid;
     grid-template-columns: 100px 1fr;
     gap: 32px;
     padding: 28px 0;
     border-top: 1px solid #EAEAEA;
+    transition: background 0.3s ease;
   }
+  
   .activity-item:last-child {
     border-bottom: 1px solid #EAEAEA;
   }
+  
+  .activity-item:hover {
+    background: rgba(30, 77, 107, 0.02);
+  }
+  
   .activity-meta { padding-top: 2px; }
-
+  
+  .activity-content h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #1A1A1A;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.01em;
+  }
+  
+  .activity-content p {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #6B6B6B;
+    line-height: 1.7;
+    margin: 0;
+  }
+  
+  /* CTA */
+  .cta-text {
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: #1A1A1A;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+    margin: 0 0 40px 0;
+    max-width: 480px;
+  }
+  
   /* Mobile */
   @media (max-width: 700px) {
-    .hero-layout { flex-direction: column-reverse; gap: 32px; }
-    .hero-photo { align-self: center; }
-
+    .hero-layout { 
+      flex-direction: column-reverse; 
+      gap: 32px; 
+    }
+    .hero-photo { 
+      align-self: center; 
+    }
+    .hero-title {
+      font-size: 2rem;
+    }
+    
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+    }
+    
     .expertise-grid {
       grid-template-columns: 1fr;
       gap: 36px;
@@ -268,10 +539,115 @@ function formatYear(date: Date) {
     .expertise-item:last-child {
       grid-column: auto;
     }
-
+    
     .activity-item {
       grid-template-columns: 80px 1fr;
       gap: 20px;
     }
   }
 </style>
+
+<script>
+  // Rotating identities
+  const identityElement = document.querySelector('.identity-text') as HTMLElement;
+  const identitiesData = document.querySelector('.rotating-identity')?.getAttribute('data-identities');
+  const identities: string[] = identitiesData ? JSON.parse(identitiesData) : [];
+  let currentIdentity = 0;
+  
+  function rotateIdentity() {
+    if (!identityElement || identities.length === 0) return;
+    
+    identityElement.style.opacity = '0';
+    identityElement.style.transform = 'translateY(-10px)';
+    
+    setTimeout(() => {
+      currentIdentity = (currentIdentity + 1) % identities.length;
+      identityElement.textContent = identities[currentIdentity];
+      identityElement.style.opacity = '1';
+      identityElement.style.transform = 'translateY(0)';
+    }, 300);
+  }
+  
+  setInterval(rotateIdentity, 3000);
+  
+  // Typing effect for description
+  const typingElement = document.querySelector('.typing-text') as HTMLElement;
+  const descriptionElement = document.querySelector('.hero-description');
+  const descriptionText = descriptionElement?.getAttribute('data-text') || '';
+  let charIndex = 0;
+  
+  function typeText() {
+    if (!typingElement) return;
+    
+    if (charIndex < descriptionText.length) {
+      typingElement.textContent += descriptionText.charAt(charIndex);
+      charIndex++;
+      setTimeout(typeText, 30);
+    }
+  }
+  
+  // Start typing after a short delay
+  setTimeout(typeText, 500);
+  
+  // Animated counter for stats
+  const statElements = document.querySelectorAll('.stat-value');
+  
+  function animateCounter(element: Element) {
+    const target = parseInt(element.getAttribute('data-value') || '0');
+    const suffix = element.getAttribute('data-suffix') || '';
+    const duration = 2000;
+    const steps = 60;
+    const stepValue = target / steps;
+    let current = 0;
+    let step = 0;
+    
+    const interval = setInterval(() => {
+      step++;
+      current = Math.min(Math.round(stepValue * step), target);
+      element.textContent = current + suffix;
+      
+      if (step >= steps) {
+        clearInterval(interval);
+        element.textContent = target + suffix;
+      }
+    }, duration / steps);
+  }
+  
+  // Intersection Observer for stats
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  statElements.forEach(el => statsObserver.observe(el));
+  
+  // Intersection Observer for timeline
+  const timelineObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+  
+  document.querySelectorAll('.timeline-item').forEach(el => {
+    timelineObserver.observe(el);
+  });
+  
+  // Parallax effect
+  const parallaxElements = document.querySelectorAll('.parallax-element');
+  
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    
+    parallaxElements.forEach(el => {
+      const speed = parseFloat(el.getAttribute('data-speed') || '0.05');
+      const yPos = scrollY * speed;
+      (el as HTMLElement).style.transform = `translateY(${yPos}px)`;
+    });
+  });
+</script>
