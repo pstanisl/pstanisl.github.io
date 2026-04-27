@@ -32,6 +32,7 @@ const { title, description = defaultDescription } = Astro.props;
     <meta property="og:locale" content={lang === 'cs' ? 'cs_CZ' : 'en_US'} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script src="/js/lang-redirect.js" async></script>
     <title>{title}</title>
   </head>
   <body style="min-height: 100vh; display: flex; flex-direction: column; background-color: #FAFAFA;">
