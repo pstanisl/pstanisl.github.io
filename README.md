@@ -1,43 +1,49 @@
-# Astro Starter Kit: Minimal
+# Petr Stanislav — Personal Website
+
+Personal website built with Astro 5, Tailwind CSS v4, and Japanese Minimal design philosophy.
+
+## Tech Stack
+
+- **Framework**: [Astro 5](https://astro.build)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com)
+- **Design**: Japanese Minimal (Muji-inspired) — see [DESIGN.md](./DESIGN.md)
+- **i18n**: English + Czech
+
+## Development
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install      # Install dependencies
+npm run dev      # Start dev server at localhost:4321
+npm run build    # Build for production to ./dist/
+npm run preview  # Preview production build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Project Structure
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
+```
 /
-├── public/
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/     # Header, Footer, LanguageSwitcher
+│   ├── content/        # Speaking & Projects collections
+│   ├── i18n/           # Translations (EN/CS)
+│   ├── layouts/        # BaseLayout
+│   ├── pages/          # Route pages
+│   └── styles/         # Global CSS
+├── public/             # Static assets
+├── DESIGN.md           # Design specification
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Design
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+This site follows the **Japanese Minimal** design philosophy — radical simplicity, generous whitespace, and subtle details. Oil blue (#1E4D6B) accent, Inter 300 weight, max-width 680px container.
 
-Any static assets, like images, can be placed in the `public/` directory.
+See [DESIGN.md](./DESIGN.md) for the complete design specification.
 
-## 🧞 Commands
+## Deployment
 
-All commands are run from the root of the project, from a terminal:
+Configured for GitHub Pages deployment via GitHub Actions. Push to `main` triggers automatic build and deploy.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## License
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+MIT
