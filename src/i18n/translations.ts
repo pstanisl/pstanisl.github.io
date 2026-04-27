@@ -21,7 +21,7 @@ export const translations = {
     'hero.name.line1': 'Petr Stanislav —',
     'hero.name.line2': 'AI Leader & CTO',
     'hero.subtitle': 'AI Leader | CTO | Consultant',
-    'hero.description': "I help companies navigate AI adoption—from strategy to production. CTO & Co-Founder at Elm.ai, with a PhD in AI and years of experience building data-driven solutions.",
+    'hero.description': "I help companies navigate AI adoption—from strategy to production. CTO & Co-Founder at Elin.ai, with a PhD in AI and years of experience building data-driven solutions.",
     'hero.cta.primary': "Let's Talk",
     'hero.cta.secondary': 'Learn More',
 
@@ -117,7 +117,7 @@ export const translations = {
     'hero.name.line1': 'Petr Stanislav —',
     'hero.name.line2': 'AI Leader & CTO',
     'hero.subtitle': 'AI Leader | CTO | Konzultant',
-    'hero.description': 'Pomáhám firmám s adopcí AI—od strategie po produkci. CTO & Co-Founder Elm.ai, s PhD v AI a lety zkušeností s budováním datových řešení.',
+    'hero.description': 'Pomáhám firmám s adopcí AI—od strategie po produkci. CTO & Co-Founder Elin.ai, s PhD v AI a lety zkušeností s budováním datových řešení.',
     'hero.cta.primary': 'Pojďme si promluvit',
     'hero.cta.secondary': 'Více informací',
 

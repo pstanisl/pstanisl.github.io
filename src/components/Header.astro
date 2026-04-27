@@ -44,6 +44,7 @@ function isActive(href: string): boolean {
         color: #1A1A1A;
         text-decoration: none;
         transition: color 0.3s ease;
+        flex-shrink: 0;
       "
       onmouseover="this.style.color='#1E4D6B'"
       onmouseout="this.style.color='#1A1A1A'"
@@ -52,7 +53,7 @@ function isActive(href: string): boolean {
     </a>
 
     <!-- Desktop nav -->
-    <div style="display: flex; align-items: center; gap: 32px;" class="desktop-nav">
+    <div class="desktop-nav" style="display: flex; align-items: center; gap: 32px;">
       {navItems.map((item) => (
         <a
           href={getLocalizedPath(item.href, lang)}
@@ -74,12 +75,12 @@ function isActive(href: string): boolean {
       <LanguageSwitcher />
     </div>
 
-    <!-- Mobile -->
-    <div style="display: flex; align-items: center; gap: 16px;" class="mobile-nav">
+    <!-- Mobile: lang switcher + hamburger -->
+    <div class="mobile-nav" style="display: none; align-items: center; gap: 16px;">
       <LanguageSwitcher />
       <button
         id="mobile-menu-button"
-        style="background: none; border: none; cursor: pointer; padding: 4px; color: #999999;"
+        style="background: none; border: none; cursor: pointer; padding: 4px; color: #999999; line-height: 0;"
         aria-label="Toggle menu"
       >
         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,7 +91,7 @@ function isActive(href: string): boolean {
 
   </nav>
 
-  <!-- Mobile menu -->
+  <!-- Mobile menu dropdown -->
   <div id="mobile-menu" style="display: none; border-top: 1px solid #EAEAEA;">
     <div class="container" style="padding-top: 16px; padding-bottom: 20px; display: flex; flex-direction: column; gap: 16px;">
       {navItems.map((item) => (
@@ -113,12 +114,9 @@ function isActive(href: string): boolean {
 </header>
 
 <style>
-  .desktop-nav { display: flex; }
-  .mobile-nav { display: none; }
-
   @media (max-width: 700px) {
-    .desktop-nav { display: none; }
-    .mobile-nav { display: flex; }
+    .desktop-nav { display: none !important; }
+    .mobile-nav { display: flex !important; }
   }
 </style>
 

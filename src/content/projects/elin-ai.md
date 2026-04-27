@@ -1,9 +1,9 @@
 ---
-title: "Elm.ai"
+title: "Elin.ai"
 description: "AI-powered investment management platform helping family offices and asset managers make better investment decisions through machine learning and natural language processing."
 role: "CTO & Co-Founder"
 technologies: ["Python", "LLMs", "Machine Learning", "Azure", "React"]
-url: "https://elm.ai"
+url: "https://elin.ai"
 featured: true
 order: 1
 ---
