@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/translations';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const allTalks = await getCollection('speaking');
+const talks = allTalks.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+function formatYear(date: Date) {
+  return date.getFullYear().toString();
+}
+---
+
+<BaseLayout
+  title={`${t('speaking.title')} — Petr Stanislav`}
+  description={t('speaking.subtitle')}
+>
+
+  <!-- ─── PAGE HEADER ────────────────────────────────────── -->
+  <section style="padding: 64px 0 48px; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+      <p class="label" style="margin: 0 0 16px 0; color: #999999;">{t('speaking.title')}</p>
+      <h1 style="
+        font-size: 2rem;
+        font-weight: 300;
+        letter-spacing: -0.01em;
+        line-height: 1.3;
+        color: #1A1A1A;
+        margin: 0;
+        max-width: 480px;
+      ">{t('speaking.subtitle')}</h1>
+    </div>
+  </section>
+
+  <!-- ─── TALKS LIST ────────────────────────────────────── -->
+  <section style="padding: 80px 0 80px; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+
+      {talks.length > 0 ? (
+        <div style="display: flex; flex-direction: column;">
+          {talks.map((talk) => (
+            <div class="talk-item">
+              <div class="talk-meta">
+                <span class="label" style="color: #1E4D6B;">{t(`type.${talk.data.type}` as any)}</span>
+                <span class="mono" style="display: block; margin-top: 6px;">{formatYear(talk.data.date)}</span>
+              </div>
+              <div class="talk-content">
+                <h3 style="
+                  font-size: 1rem;
+                  font-weight: 400;
+                  color: #1A1A1A;
+                  margin: 0 0 6px 0;
+                  letter-spacing: -0.01em;
+                ">{talk.data.title}</h3>
+                <p style="
+                  font-size: 0.85rem;
+                  font-weight: 300;
+                  color: #999999;
+                  margin: 0 0 12px 0;
+                  letter-spacing: 0.02em;
+                ">{talk.data.venue}</p>
+                <p style="
+                  font-size: 0.85rem;
+                  font-weight: 300;
+                  color: #6B6B6B;
+                  line-height: 1.7;
+                  margin: 0 0 16px 0;
+                ">{talk.data.description}</p>
+                <div style="display: flex; gap: 24px;">
+                  {talk.data.videoUrl && (
+                    <a
+                      href={talk.data.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn-link"
+                      style="font-size: 11px;"
+                    >
+                      {t('speaking.watch')}
+                    </a>
+                  )}
+                  {talk.data.slidesUrl && (
+                    <a
+                      href={talk.data.slidesUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn-link"
+                      style="font-size: 11px;"
+                    >
+                      {t('speaking.slides')}
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p style="font-size: 0.95rem; font-weight: 300; color: #999999; margin: 0;">
+          {t('speaking.empty')}
+          <a
+            href="https://www.linkedin.com/in/petrstanislav/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="color: #1E4D6B; border-bottom: 1px solid #1E4D6B; padding-bottom: 1px;"
+          >
+            LinkedIn
+          </a>.
+        </p>
+      )}
+
+    </div>
+  </section>
+
+  <!-- ─── CTA ───────────────────────────────────────────── -->
+  <section style="padding: 80px 0 100px;">
+    <div class="container">
+      <p class="label" style="margin: 0 0 24px 0; color: #999999;">{t('speaking.cta.title')}</p>
+      <p style="
+        font-size: 1.4rem;
+        font-weight: 300;
+        color: #1A1A1A;
+        letter-spacing: -0.01em;
+        line-height: 1.5;
+        margin: 0 0 40px 0;
+        max-width: 480px;
+      ">{t('speaking.cta.description')}</p>
+      <a href={getLocalizedPath('/contact', lang)} class="btn-link-primary">
+        {t('cta.button')}
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .talk-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-top: 1px solid #EAEAEA;
+  }
+  .talk-item:last-child {
+    border-bottom: 1px solid #EAEAEA;
+  }
+  .talk-meta { padding-top: 2px; }
+
+  @media (max-width: 700px) {
+    .talk-item {
+      grid-template-columns: 80px 1fr;
+      gap: 20px;
+    }
+  }
+</style>

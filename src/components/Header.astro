@@ -1,0 +1,133 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/translations';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const navItems = [
+  { href: '/about', label: t('nav.about') },
+  { href: '/speaking', label: t('nav.speaking') },
+  { href: '/projects', label: t('nav.projects') },
+  { href: '/contact', label: t('nav.contact') },
+];
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  const localizedHref = getLocalizedPath(href, lang);
+  const normalizedCurrent = currentPath.replace(/\/$/, '') || '/';
+  const normalizedHref = localizedHref.replace(/\/$/, '') || '/';
+  return normalizedCurrent === normalizedHref;
+}
+---
+
+<header style="
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(250, 250, 250, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #EAEAEA;
+">
+  <nav class="container" style="display: flex; justify-content: space-between; align-items: center; height: 48px;">
+
+    <!-- Logo -->
+    <a
+      href={getLocalizedPath('/', lang)}
+      style="
+        font-size: 15px;
+        font-weight: 400;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: #1A1A1A;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      "
+      onmouseover="this.style.color='#1E4D6B'"
+      onmouseout="this.style.color='#1A1A1A'"
+    >
+      Petr Stanislav
+    </a>
+
+    <!-- Desktop nav -->
+    <div style="display: flex; align-items: center; gap: 32px;" class="desktop-nav">
+      {navItems.map((item) => (
+        <a
+          href={getLocalizedPath(item.href, lang)}
+          style={`
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            color: ${isActive(item.href) ? '#1E4D6B' : '#999999'};
+          `}
+          onmouseover={`if(!${isActive(item.href)}) this.style.color='#1A1A1A'`}
+          onmouseout={`if(!${isActive(item.href)}) this.style.color='#999999'`}
+        >
+          {item.label}
+        </a>
+      ))}
+      <LanguageSwitcher />
+    </div>
+
+    <!-- Mobile -->
+    <div style="display: flex; align-items: center; gap: 16px;" class="mobile-nav">
+      <LanguageSwitcher />
+      <button
+        id="mobile-menu-button"
+        style="background: none; border: none; cursor: pointer; padding: 4px; color: #999999;"
+        aria-label="Toggle menu"
+      >
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" style="display: none; border-top: 1px solid #EAEAEA;">
+    <div class="container" style="padding-top: 16px; padding-bottom: 20px; display: flex; flex-direction: column; gap: 16px;">
+      {navItems.map((item) => (
+        <a
+          href={getLocalizedPath(item.href, lang)}
+          style={`
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: ${isActive(item.href) ? '#1E4D6B' : '#6B6B6B'};
+          `}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<style>
+  .desktop-nav { display: flex; }
+  .mobile-nav { display: none; }
+
+  @media (max-width: 700px) {
+    .desktop-nav { display: none; }
+    .mobile-nav { display: flex; }
+  }
+</style>
+
+<script>
+  const button = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+
+  button?.addEventListener('click', () => {
+    const isHidden = menu?.style.display === 'none';
+    if (menu) menu.style.display = isHidden ? 'block' : 'none';
+  });
+</script>

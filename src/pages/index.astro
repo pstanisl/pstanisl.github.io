@@ -1,0 +1,288 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/translations';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={`${t('hero.title')} — ${t('hero.subtitle')}`}>
+
+  <!-- ─── HERO ─────────────────────────────────────────── -->
+  <section style="padding: 80px 0 100px; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+      <div class="hero-layout">
+
+        <!-- Text -->
+        <div class="hero-text">
+          <p class="label" style="margin: 0 0 28px 0; color: #1E4D6B;">
+            {t('hero.subtitle')}
+          </p>
+          <h1 style="
+            font-size: 2.75rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            line-height: 1.25;
+            color: #1A1A1A;
+            margin: 0 0 24px 0;
+          ">
+            {t('hero.name.line1')}<br />
+            <span style="color: #1E4D6B;">{t('hero.name.line2')}</span>
+          </h1>
+          <p style="
+            font-size: 1rem;
+            font-weight: 300;
+            color: #6B6B6B;
+            line-height: 1.8;
+            margin: 0 0 40px 0;
+            max-width: 420px;
+          ">
+            {t('hero.description')}
+          </p>
+          <div style="display: flex; gap: 32px; align-items: center; flex-wrap: wrap;">
+            <a href={getLocalizedPath('/contact', lang)} class="btn-link-primary">
+              {t('hero.cta.primary')}
+            </a>
+            <a href={getLocalizedPath('/about', lang)} class="btn-link">
+              {t('hero.cta.secondary')}
+            </a>
+          </div>
+        </div>
+
+        <!-- Profile photo placeholder -->
+        <div class="hero-photo">
+          <div style="
+            width: 180px;
+            height: 180px;
+            border: 1px solid #EAEAEA;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: #F5F5F5;
+          ">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CCCCCC" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span style="
+              font-size: 10px;
+              font-weight: 400;
+              letter-spacing: 0.15em;
+              text-transform: uppercase;
+              color: #CCCCCC;
+            ">Photo</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WHAT I DO ─────────────────────────────────────── -->
+  <section style="padding: 80px 0 100px; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+
+      <p class="label" style="margin: 0 0 48px 0;">{t('whatido.title')}</p>
+
+      <div class="expertise-grid">
+        <div class="expertise-item">
+          <h3 style="
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            color: #1A1A1A;
+            margin: 0 0 10px 0;
+          ">{t('whatido.strategy.title')}</h3>
+          <p style="
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: #6B6B6B;
+            line-height: 1.7;
+            margin: 0;
+          ">{t('whatido.strategy.description')}</p>
+        </div>
+
+        <div class="expertise-item">
+          <h3 style="
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            color: #1A1A1A;
+            margin: 0 0 10px 0;
+          ">{t('whatido.leadership.title')}</h3>
+          <p style="
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: #6B6B6B;
+            line-height: 1.7;
+            margin: 0;
+          ">{t('whatido.leadership.description')}</p>
+        </div>
+
+        <div class="expertise-item">
+          <h3 style="
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            color: #1A1A1A;
+            margin: 0 0 10px 0;
+          ">{t('whatido.research.title')}</h3>
+          <p style="
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: #6B6B6B;
+            line-height: 1.7;
+            margin: 0;
+          ">{t('whatido.research.description')}</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── RECENT ACTIVITY ───────────────────────────────── -->
+  <section style="padding: 80px 0 100px; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 48px; flex-wrap: wrap; gap: 12px;">
+        <p class="label" style="margin: 0;">{t('recent.title')}</p>
+        <a href={getLocalizedPath('/speaking', lang)} class="btn-link" style="font-size: 11px;">
+          {t('recent.viewall')}
+        </a>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 0;">
+
+        <div class="activity-item">
+          <div class="activity-meta">
+            <span class="label" style="color: #1E4D6B;">{t('type.podcast')}</span>
+            <span class="mono" style="display: block; margin-top: 4px;">2024</span>
+          </div>
+          <div class="activity-content">
+            <h3 style="
+              font-size: 1rem;
+              font-weight: 400;
+              color: #1A1A1A;
+              margin: 0 0 8px 0;
+              letter-spacing: -0.01em;
+            ">AI Adoption in Enterprise</h3>
+            <p style="
+              font-size: 0.85rem;
+              font-weight: 300;
+              color: #6B6B6B;
+              line-height: 1.7;
+              margin: 0;
+            ">
+              Discussion on practical strategies for implementing AI in large organizations.
+            </p>
+          </div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-meta">
+            <span class="label" style="color: #1E4D6B;">{t('type.talk')}</span>
+            <span class="mono" style="display: block; margin-top: 4px;">2024</span>
+          </div>
+          <div class="activity-content">
+            <h3 style="
+              font-size: 1rem;
+              font-weight: 400;
+              color: #1A1A1A;
+              margin: 0 0 8px 0;
+              letter-spacing: -0.01em;
+            ">Building AI-First Products</h3>
+            <p style="
+              font-size: 0.85rem;
+              font-weight: 300;
+              color: #6B6B6B;
+              line-height: 1.7;
+              margin: 0;
+            ">
+              Conference presentation on the challenges and lessons from building Elm.ai.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── CTA ───────────────────────────────────────────── -->
+  <section style="padding: 80px 0 100px;">
+    <div class="container">
+      <p class="label" style="margin: 0 0 24px 0; color: #999999;">{t('cta.title')}</p>
+      <p style="
+        font-size: 1.4rem;
+        font-weight: 300;
+        color: #1A1A1A;
+        letter-spacing: -0.01em;
+        line-height: 1.5;
+        margin: 0 0 40px 0;
+        max-width: 480px;
+      ">
+        {t('cta.description')}
+      </p>
+      <a href={getLocalizedPath('/contact', lang)} class="btn-link-primary">
+        {t('cta.button')}
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* Hero layout */
+  .hero-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 48px;
+  }
+  .hero-text { flex: 1; }
+  .hero-photo { flex-shrink: 0; padding-top: 8px; }
+
+  /* Expertise grid */
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 64px;
+  }
+  .expertise-item:last-child {
+    grid-column: 1 / -1;
+  }
+
+  /* Activity items */
+  .activity-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 32px;
+    padding: 28px 0;
+    border-top: 1px solid #EAEAEA;
+  }
+  .activity-item:last-child {
+    border-bottom: 1px solid #EAEAEA;
+  }
+  .activity-meta { padding-top: 2px; }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .hero-layout { flex-direction: column-reverse; gap: 32px; }
+    .hero-photo { align-self: center; }
+
+    .expertise-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+    .expertise-item:last-child {
+      grid-column: auto;
+    }
+
+    .activity-item {
+      grid-template-columns: 80px 1fr;
+      gap: 20px;
+    }
+  }
+</style>

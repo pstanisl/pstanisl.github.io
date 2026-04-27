@@ -1,0 +1,280 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/translations';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const timeline = [
+  {
+    period: '2022—',
+    tag: 'Startup',
+    role: 'CTO & Co-Founder',
+    company: 'Elm.ai',
+    description: 'Building AI-powered solutions for investment management. Leading technical strategy and product development.',
+  },
+  {
+    period: '2023—',
+    tag: 'Advisory',
+    role: 'AI Consultant',
+    company: 'O2',
+    description: 'Helping O2 with large language model adoption. Microsoft Azure and LLM integration.',
+  },
+  {
+    period: '2019—2023',
+    tag: 'Leadership',
+    role: 'Head of AI Technology',
+    company: 'AI Centre',
+    description: 'Responsible for AI platform architecture, tooling, and practices. Leading a team of senior AI engineers.',
+  },
+  {
+    period: '2018—2019',
+    tag: 'Engineering',
+    role: 'BigData Development Lead',
+    company: 'Various',
+    description: 'Developing on-premise platform and cloud solutions. Solution architecture for Hadoop and cloud platforms.',
+  },
+  {
+    period: '2016—2022',
+    tag: 'Research',
+    role: 'Scientist & PhD Student',
+    company: 'University of West Bohemia',
+    description: 'Research on automatic speech recognition for patients after laryngectomy. CUDA, React.js, and advanced ML.',
+  },
+];
+
+const technicalSkills = [
+  'Large Language Models', 'Python', 'Machine Learning',
+  'Deep Learning', 'Azure', 'Data Engineering',
+  'BigData', 'Hadoop', 'CUDA',
+];
+
+const leadershipSkills = [
+  'Team Management', 'Technical Strategy', 'Product Development',
+  'Budget Monitoring', 'Solution Architecture', 'Teaching',
+];
+---
+
+<BaseLayout
+  title={`${t('about.title')} — Petr Stanislav`}
+  description="Learn about Petr Stanislav's journey from PhD researcher to AI leader and CTO."
+>
+
+  <!-- ─── PAGE HEADER ────────────────────────────────────── -->
+  <section style="padding: 64px 0 48px; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+      <p class="label" style="margin: 0 0 16px 0; color: #999999;">{t('about.title')}</p>
+      <h1 style="
+        font-size: 2rem;
+        font-weight: 300;
+        letter-spacing: -0.01em;
+        line-height: 1.3;
+        color: #1A1A1A;
+        margin: 0;
+        max-width: 480px;
+      ">{t('about.subtitle')}</h1>
+    </div>
+  </section>
+
+  <!-- ─── STORY ──────────────────────────────────────────── -->
+  <section style="padding: 80px 0 80px; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+      <div style="display: flex; flex-direction: column; gap: 20px; max-width: 560px;">
+        <p style="font-size: 1.05rem; font-weight: 300; color: #1A1A1A; line-height: 1.8; margin: 0;">
+          My mission is to make the life of data scientists a little bit easier. Machine learning and data is my passion.
+        </p>
+        <p style="font-size: 0.95rem; font-weight: 300; color: #6B6B6B; line-height: 1.8; margin: 0;">
+          I served as a researcher for the Department of Cybernetics at the Faculty of Applied Science.
+          As a teacher, I taught courses on programming and software development,
+          helping the next generation of engineers understand complex systems.
+        </p>
+        <p style="font-size: 0.95rem; font-weight: 300; color: #6B6B6B; line-height: 1.8; margin: 0;">
+          My PhD research focused on improving automatic speech recognition systems for patients
+          after total laryngectomy — work that combined deep technical challenges with meaningful
+          real-world impact.
+        </p>
+        <p style="font-size: 0.95rem; font-weight: 300; color: #6B6B6B; line-height: 1.8; margin: 0;">
+          Today, as CTO & Co-Founder at Elm.ai, I apply everything I've learned to build
+          AI-powered investment tools. Bridging the gap between cutting-edge research and
+          practical applications that deliver real value.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EXPERIENCE TIMELINE ───────────────────────────── -->
+  <section style="padding: 80px 0 80px; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+      <p class="label" style="margin: 0 0 48px 0;">{t('about.experience')}</p>
+
+      <div style="display: flex; flex-direction: column;">
+        {timeline.map((item) => (
+          <div class="timeline-item">
+            <div class="timeline-meta">
+              <span class="label" style="color: #1E4D6B;">{item.tag}</span>
+              <span class="mono" style="display: block; margin-top: 6px;">{item.period}</span>
+            </div>
+            <div class="timeline-content">
+              <h3 style="
+                font-size: 1rem;
+                font-weight: 400;
+                color: #1A1A1A;
+                margin: 0 0 4px 0;
+                letter-spacing: -0.01em;
+              ">{item.role}</h3>
+              <p style="
+                font-size: 0.85rem;
+                font-weight: 400;
+                color: #999999;
+                margin: 0 0 10px 0;
+                letter-spacing: 0.02em;
+              ">{item.company}</p>
+              <p style="
+                font-size: 0.85rem;
+                font-weight: 300;
+                color: #6B6B6B;
+                line-height: 1.7;
+                margin: 0;
+              ">{item.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EXPERTISE ─────────────────────────────────────── -->
+  <section style="padding: 80px 0 80px; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+      <p class="label" style="margin: 0 0 48px 0;">{t('about.expertise')}</p>
+
+      <div class="skills-grid">
+        <div>
+          <p class="label" style="margin: 0 0 20px 0; color: #999999;">{t('about.technical')}</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            {technicalSkills.map((skill) => (
+              <span style="
+                font-size: 12px;
+                font-weight: 300;
+                color: #6B6B6B;
+                border: 1px solid #EAEAEA;
+                padding: 6px 12px;
+                letter-spacing: 0.03em;
+              ">{skill}</span>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <p class="label" style="margin: 0 0 20px 0; color: #999999;">{t('about.leadership')}</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            {leadershipSkills.map((skill) => (
+              <span style="
+                font-size: 12px;
+                font-weight: 300;
+                color: #6B6B6B;
+                border: 1px solid #EAEAEA;
+                padding: 6px 12px;
+                letter-spacing: 0.03em;
+              ">{skill}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EDUCATION ─────────────────────────────────────── -->
+  <section style="padding: 80px 0 80px; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+      <p class="label" style="margin: 0 0 48px 0;">{t('about.education')}</p>
+
+      <div style="display: flex; flex-direction: column;">
+        <div class="timeline-item">
+          <div class="timeline-meta">
+            <span class="mono">2016—2022</span>
+          </div>
+          <div class="timeline-content">
+            <h3 style="
+              font-size: 1rem;
+              font-weight: 400;
+              color: #1A1A1A;
+              margin: 0 0 4px 0;
+            ">Doctor of Philosophy — PhD</h3>
+            <p style="font-size: 0.85rem; font-weight: 300; color: #6B6B6B; margin: 0;">
+              University of West Bohemia, Pilsen
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-meta">
+            <span class="mono">Master's</span>
+          </div>
+          <div class="timeline-content">
+            <h3 style="
+              font-size: 1rem;
+              font-weight: 400;
+              color: #1A1A1A;
+              margin: 0 0 4px 0;
+            ">Master's Degree — Robotics</h3>
+            <p style="font-size: 0.85rem; font-weight: 300; color: #6B6B6B; margin: 0;">
+              Syddansk Universitet — University of Southern Denmark
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ───────────────────────────────────────────── -->
+  <section style="padding: 80px 0 100px;">
+    <div class="container">
+      <p class="label" style="margin: 0 0 24px 0; color: #999999;">{t('about.cta.title')}</p>
+      <p style="
+        font-size: 1.4rem;
+        font-weight: 300;
+        color: #1A1A1A;
+        letter-spacing: -0.01em;
+        line-height: 1.5;
+        margin: 0 0 40px 0;
+        max-width: 440px;
+      ">{t('about.cta.description')}</p>
+      <a href={getLocalizedPath('/contact', lang)} class="btn-link-primary">
+        {t('cta.button')}
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 32px;
+    padding: 28px 0;
+    border-top: 1px solid #EAEAEA;
+  }
+  .timeline-item:last-child {
+    border-bottom: 1px solid #EAEAEA;
+  }
+  .timeline-meta { padding-top: 2px; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 64px;
+  }
+
+  @media (max-width: 700px) {
+    .timeline-item {
+      grid-template-columns: 80px 1fr;
+      gap: 20px;
+    }
+    .skills-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>
