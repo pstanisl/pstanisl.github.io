@@ -6,10 +6,9 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const navItems = [
+  { href: '/work', label: t('nav.work') },
   { href: '/about', label: t('nav.about') },
-  { href: '/speaking', label: t('nav.speaking') },
-  { href: '/projects', label: t('nav.projects') },
-  { href: '/contact', label: t('nav.contact') },
+  { href: '/contact', label: t('nav.connect') },
 ];
 
 const currentPath = Astro.url.pathname;
