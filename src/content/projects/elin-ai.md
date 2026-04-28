@@ -6,6 +6,7 @@ technologies: ["Python", "LLMs", "Machine Learning", "Azure", "React"]
 url: "https://elin.ai"
 featured: true
 order: 1
+year: "2023 — present"
 ---
 
 Leading technical strategy and product development for an AI-native investment platform.

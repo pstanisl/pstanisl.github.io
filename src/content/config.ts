@@ -25,6 +25,7 @@ const projectsCollection = defineCollection({
     github: z.string().optional(),
     featured: z.boolean().default(false),
     order: z.number().default(0),
+    year: z.string().optional(),
   }),
 });
 

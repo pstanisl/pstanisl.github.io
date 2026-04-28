@@ -5,6 +5,7 @@ role: "PhD Researcher"
 technologies: ["Python", "CUDA", "Deep Learning", "Signal Processing", "TensorFlow"]
 featured: false
 order: 3
+year: "2016 — 2022"
 ---
 
 Research bridging advanced ML techniques with meaningful healthcare impact.

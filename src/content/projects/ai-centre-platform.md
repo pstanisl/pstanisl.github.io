@@ -5,6 +5,7 @@ role: "Head of AI Technology"
 technologies: ["Python", "Kubernetes", "MLflow", "Spark", "Azure"]
 featured: true
 order: 2
+year: "2021 — 2023"
 ---
 
 Built and led the team responsible for the core AI infrastructure serving multiple business units.
