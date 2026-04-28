@@ -227,21 +227,20 @@ const leadershipSkills = [
     </div>
   </section>
 
+  <!-- ─── BEYOND WORK ──────────────────────────────────── -->
+  <section style="padding: 80px 0 80px; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+      <p style="font-size: 0.9rem; font-weight: 300; color: var(--color-text-muted); line-height: 1.8; margin: 0; max-width: 540px; font-style: italic;">
+        When I'm not building AI systems, you'll find me on a bike, reading sci-fi, or thinking about what comes next.
+      </p>
+    </div>
+  </section>
+
   <!-- ─── CTA ───────────────────────────────────────────── -->
   <section style="padding: 80px 0 100px;">
     <div class="container">
-      <p class="label" style="margin: 0 0 24px 0; color: #999999;">{t('about.cta.title')}</p>
-      <p style="
-        font-size: 1.4rem;
-        font-weight: 300;
-        color: #1A1A1A;
-        letter-spacing: -0.01em;
-        line-height: 1.5;
-        margin: 0 0 40px 0;
-        max-width: 440px;
-      ">{t('about.cta.description')}</p>
-      <a href={getLocalizedPath('/contact', lang)} class="btn-link-primary">
-        {t('cta.button')}
+      <a href={getLocalizedPath('/contact', lang)} class="btn-link">
+        {t('home.connect.cta')}
       </a>
     </div>
   </section>
@@ -251,7 +250,7 @@ const leadershipSkills = [
 <style>
   .timeline-item {
     display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 140px 1fr;
     gap: 32px;
     padding: 28px 0;
     border-top: 1px solid #EAEAEA;
@@ -269,7 +268,7 @@ const leadershipSkills = [
 
   @media (max-width: 700px) {
     .timeline-item {
-      grid-template-columns: 80px 1fr;
+      grid-template-columns: 100px 1fr;
       gap: 20px;
     }
     .skills-grid {
