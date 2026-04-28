@@ -6,482 +6,162 @@ import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n/tr
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Get featured talks for homepage (sorted by date, most recent first)
-const allTalks = await getCollection('speaking');
-const featuredTalks = allTalks
-  .filter(talk => talk.data.featured)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+const allProjects = await getCollection('projects');
+
+const featuredProjects = allProjects
+  .filter(p => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 2);
 
-function formatYear(date: Date) {
-  return date.getFullYear().toString();
-}
-
-// Stats data (Czech)
-const statsData = [
-  { value: 8, suffix: '+', label: 'let v AI' },
-  { value: 20, suffix: '+', label: 'přednášek' },
-  { value: 1, suffix: '', label: 'PhD' },
-  { value: 50, suffix: '+', label: 'projektů' },
-];
-
-// Rotating identities (Czech)
-const identities = [
-  'AI Leader',
-  'CTO @ Elin.ai',
-  'PhD Výzkumník',
-  'AI Konzultant',
-  'Speaker',
+const signalEntries = lang === 'cs' ? [
+  { date: '2026.04', text: 'Stavím nové AI funkce v <a href="https://elin.ai">Elin.ai</a>. Zkoumám orchestraci agentů.' },
+  { date: '2026.03', text: 'Přednášel na konferenci AI ve veřejném sektoru o praktickém nasazení LLM.' },
+  { date: '2026.01', text: 'Výzkum multi-agentních architektur. Znovu čtu "Futurologický kongres".' },
+] : [
+  { date: '2026.04', text: 'Building next-gen AI features at <a href="https://elin.ai">Elin.ai</a>. Exploring agent orchestration patterns.' },
+  { date: '2026.03', text: 'Spoke at AI in Public Sector conference on practical LLM deployment in government systems.' },
+  { date: '2026.01', text: 'Researching multi-agent architectures. Reading "The Futurological Congress" again.' },
 ];
 ---
 
 <BaseLayout title={`${t('hero.title')} — ${t('hero.subtitle')}`}>
 
-  <!-- ─── HERO ─────────────────────────────────────────── -->
-  <section class="hero-section">
+  <!-- Mood 1: Stillness -->
+  <section style="min-height: 85vh; display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid #EAEAEA;">
     <div class="container">
-      <div class="hero-layout">
-
-        <!-- Text -->
-        <div class="hero-text">
-          <p class="label" style="margin: 0 0 28px 0; color: #1E4D6B;">
-            {t('hero.subtitle')}
-          </p>
-          <h1 class="hero-title">
-            {t('hero.name.line1')}<br />
-            <span class="rotating-identity" data-identities={JSON.stringify(identities)}>
-              <span class="identity-text">{identities[0]}</span>
-              <span class="identity-cursor">|</span>
-            </span>
-          </h1>
-          <p class="hero-description">
-            {t('hero.description')}
-          </p>
-          <div style="display: flex; gap: 32px; align-items: center; flex-wrap: wrap;">
-            <a href={getLocalizedPath('/contact', lang)} class="btn-link-primary">
-              {t('hero.cta.primary')}
-            </a>
-            <a href={getLocalizedPath('/about', lang)} class="btn-link">
-              {t('hero.cta.secondary')}
-            </a>
-          </div>
-        </div>
-
-        <!-- Profile photo placeholder with parallax -->
-        <div class="hero-photo parallax-element" data-speed="0.05">
-          <div class="photo-frame">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CCCCCC" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-            <span class="photo-label">Photo</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── STATS ─────────────────────────────────────────── -->
-  <section class="stats-section">
-    <div class="container">
-      <div class="stats-grid">
-        {statsData.map((stat) => (
-          <div class="stat-item">
-            <span class="stat-value" data-value={stat.value} data-suffix={stat.suffix}>0{stat.suffix}</span>
-            <span class="stat-label">{stat.label}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── WHAT I DO ─────────────────────────────────────── -->
-  <section style="padding: 80px 0 100px; border-bottom: 1px solid #EAEAEA;">
-    <div class="container">
-      <p class="label" style="margin: 0 0 48px 0;">{t('whatido.title')}</p>
-
-      <div class="expertise-grid">
-        <div class="expertise-item parallax-element" data-speed="-0.02">
-          <h3>{t('whatido.strategy.title')}</h3>
-          <p>{t('whatido.strategy.description')}</p>
-        </div>
-
-        <div class="expertise-item parallax-element" data-speed="0.02">
-          <h3>{t('whatido.leadership.title')}</h3>
-          <p>{t('whatido.leadership.description')}</p>
-        </div>
-
-        <div class="expertise-item parallax-element" data-speed="-0.01">
-          <h3>{t('whatido.research.title')}</h3>
-          <p>{t('whatido.research.description')}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── RECENT ACTIVITY ───────────────────────────────── -->
-  <section style="padding: 80px 0 100px; border-bottom: 1px solid #EAEAEA;">
-    <div class="container">
-      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 48px; flex-wrap: wrap; gap: 12px;">
-        <p class="label" style="margin: 0;">{t('recent.title')}</p>
-        <a href={getLocalizedPath('/speaking', lang)} class="btn-link" style="font-size: 11px;">
-          {t('recent.viewall')}
-        </a>
-      </div>
-
-      <div style="display: flex; flex-direction: column; gap: 0;">
-        {featuredTalks.map((talk) => (
-          <div class="activity-item">
-            <div class="activity-meta">
-              <span class="label" style="color: #1E4D6B;">{t(`type.${talk.data.type}` as any)}</span>
-              <span class="mono" style="display: block; margin-top: 4px;">{formatYear(talk.data.date)}</span>
-            </div>
-            <div class="activity-content">
-              <h3>{talk.data.title}</h3>
-              <p>{talk.data.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── CTA ───────────────────────────────────────────── -->
-  <section style="padding: 80px 0 100px;">
-    <div class="container">
-      <p class="label" style="margin: 0 0 24px 0; color: #999999;">{t('cta.title')}</p>
-      <p class="cta-text">
-        {t('cta.description')}
+      <p class="mono" style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 24px 0;">
+        {t('home.hero.label')}
       </p>
-      <a href={getLocalizedPath('/contact', lang)} class="btn-link-primary">
-        {t('cta.button')}
-      </a>
+      <h1 style="margin: 0 0 20px 0;">{t('hero.title')}</h1>
+      <p style="font-size: 1.1rem; font-weight: 300; color: var(--color-text-secondary); line-height: 1.7; max-width: 540px; margin: 0;">
+        {t('home.hero.tagline')}
+      </p>
+      <p class="mono" style="margin-top: 80px; font-size: 11px; letter-spacing: 0.15em; opacity: 0.5;">
+        {t('home.hero.scroll')}
+      </p>
+    </div>
+  </section>
+
+  <!-- Mood 2: Evidence -->
+  <section style="padding: 100px 0; border-bottom: 1px solid #EAEAEA;">
+    <div class="container">
+      <p class="label" style="margin: 0 0 48px 0;">{t('home.work.title')}</p>
+
+      <div class="work-grid">
+        {featuredProjects.map((project) => (
+          <div class="reveal work-card" style="display: contents;">
+            <div style="padding: 28px 24px 28px 0; border-top: 1px solid #EAEAEA; display: flex; flex-direction: column; gap: 4px;">
+              <span class="mono" style="font-size: 12px;">{project.data.order === 1 ? '2023 — present' : '2021 — 2023'}</span>
+              <span class="mono" style="font-size: 11px; color: var(--color-primary); letter-spacing: 0.03em;">{project.data.role}</span>
+            </div>
+            <div style="padding: 28px 0; border-top: 1px solid #EAEAEA;">
+              <h3 class="work-title" style="font-size: 1.35rem; font-weight: 400; letter-spacing: -0.01em; line-height: 1.35; margin: 0 0 10px 0; transition: color 0.3s ease;">{project.data.title}</h3>
+              <p style="font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.7; margin: 0 0 14px 0;">{project.data.description}</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                {project.data.technologies.slice(0, 4).map((tech: string) => (
+                  <span style="font-size: 11px; font-weight: 300; color: var(--color-text-muted); border: 1px solid var(--color-border); padding: 4px 10px; letter-spacing: 0.03em;">{tech}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <div class="reveal work-card" style="display: contents;">
+          <div style="padding: 28px 24px 28px 0; border-top: 1px solid #EAEAEA; display: flex; flex-direction: column; gap: 4px;">
+            <span class="mono" style="font-size: 12px;">2018 — present</span>
+            <span class="mono" style="font-size: 11px; color: var(--color-primary); letter-spacing: 0.03em;">20+ Talks</span>
+          </div>
+          <div style="padding: 28px 0; border-top: 1px solid #EAEAEA; border-bottom: 1px solid #EAEAEA;">
+            <h3 class="work-title" style="font-size: 1.35rem; font-weight: 400; letter-spacing: -0.01em; line-height: 1.35; margin: 0 0 10px 0; transition: color 0.3s ease;">Conference Speaking</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.7; margin: 0 0 14px 0;">AI adoption, LLM integration patterns, and building AI-first products. Keynotes, workshops, podcasts, and panels.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <span style="font-size: 11px; font-weight: 300; color: var(--color-text-muted); border: 1px solid var(--color-border); padding: 4px 10px; letter-spacing: 0.03em;">MLPrague</span>
+              <span style="font-size: 11px; font-weight: 300; color: var(--color-text-muted); border: 1px solid var(--color-border); padding: 4px 10px; letter-spacing: 0.03em;">DataTalk</span>
+              <span style="font-size: 11px; font-weight: 300; color: var(--color-text-muted); border: 1px solid var(--color-border); padding: 4px 10px; letter-spacing: 0.03em;">Scriptease</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 32px;">
+        <a href={getLocalizedPath('/work', lang)} class="btn-link">{t('home.work.viewall')}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mood 3: Signal -->
+  <section style="padding: 100px 0; border-bottom: 1px solid #EAEAEA; background: var(--color-surface);">
+    <div class="container">
+      <p class="label" style="margin: 0 0 48px 0;">{t('home.signal.title')}</p>
+
+      <div class="signal-grid">
+        {signalEntries.map((entry) => (
+          <div class="reveal" style="display: contents;">
+            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); letter-spacing: 0.05em; padding: 14px 0; border-top: 1px solid var(--color-border);">
+              {entry.date}
+            </span>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 300; color: var(--color-text-secondary); line-height: 1.8; padding: 14px 0; border-top: 1px solid var(--color-border);"
+              set:html={entry.text} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Mood 4: Invitation -->
+  <section class="reveal" style="padding: 120px 0;">
+    <div class="container">
+      <h2 style="margin: 0 0 16px 0;">{t('home.connect.heading')}</h2>
+      <p style="font-size: 0.9rem; color: var(--color-text-secondary); margin: 0 0 32px 0; max-width: 480px;">
+        {t('home.connect.subtext')}
+      </p>
+      <a href={getLocalizedPath('/contact', lang)} class="btn-link">{t('home.connect.cta')}</a>
     </div>
   </section>
 
 </BaseLayout>
 
 <style>
-  /* Hero */
-  .hero-section {
-    padding: 80px 0 100px;
-    border-bottom: 1px solid #EAEAEA;
-    background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
+  .work-card:hover .work-title {
+    color: var(--color-primary);
   }
-  
-  .hero-layout {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 48px;
-  }
-  
-  .hero-text { flex: 1; }
-  
-  .hero-title {
-    font-size: 2.75rem;
-    font-weight: 300;
-    letter-spacing: -0.01em;
-    line-height: 1.25;
-    color: #1A1A1A;
-    margin: 0 0 24px 0;
-  }
-  
-  .hero-description {
-    font-size: 1rem;
-    font-weight: 300;
-    color: #6B6B6B;
-    line-height: 1.8;
-    margin: 0 0 40px 0;
-    max-width: 420px;
-    min-height: 3.6em;
-  }
-  
-  .hero-photo {
-    flex-shrink: 0;
-    padding-top: 8px;
-    transition: transform 0.3s ease;
-  }
-  
-  .photo-frame {
-    width: 180px;
-    height: 180px;
-    border: 1px solid #EAEAEA;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background-color: #F5F5F5;
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
-  }
-  
-  .photo-frame:hover {
-    transform: scale(1.02);
-    box-shadow: 0 10px 40px rgba(30, 77, 107, 0.1);
-  }
-  
-  .photo-label {
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #CCCCCC;
-  }
-  
-  /* Rotating Identity */
-  .rotating-identity {
-    color: #1E4D6B;
-    display: inline-block;
-    position: relative;
-  }
-  
-  .identity-text {
-    display: inline-block;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  
-  .identity-cursor {
-    animation: blink 1s infinite;
-    font-weight: 200;
-    opacity: 1;
-  }
-  
-  @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-  }
-  
-  /* Typing cursor */
-  .typing-cursor {
-    color: #1E4D6B;
-    animation: blink 1s infinite;
-    font-weight: 200;
-  }
-  
-  /* Stats */
-  .stats-section {
-    padding: 60px 0;
-    border-bottom: 1px solid #EAEAEA;
-    background: #FFFFFF;
-  }
-  
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
-    text-align: center;
-  }
-  
-  .stat-item {
-    padding: 24px 16px;
-    border: 1px solid #EAEAEA;
-    border-radius: 4px;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-  }
-  
-  .stat-item:hover {
-    transform: translateY(-4px);
-    border-color: #1E4D6B;
-  }
-  
-  .stat-value {
-    display: block;
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: #1E4D6B;
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
-  }
-  
-  .stat-label {
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #6B6B6B;
-  }
-  
-  /* Expertise */
-  .expertise-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px 64px;
-  }
-  
-  .expertise-item:last-child {
-    grid-column: 1 / -1;
-  }
-  
-  .expertise-item h3 {
-    font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    color: #1A1A1A;
-    margin: 0 0 10px 0;
-  }
-  
-  .expertise-item p {
-    font-size: 0.85rem;
-    font-weight: 300;
-    color: #6B6B6B;
-    line-height: 1.7;
-    margin: 0;
-  }
-  
-  /* Activity */
-  .activity-item {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 32px;
-    padding: 28px 0;
-    border-top: 1px solid #EAEAEA;
-    transition: background 0.3s ease;
-  }
-  
-  .activity-item:last-child {
-    border-bottom: 1px solid #EAEAEA;
-  }
-  
-  .activity-item:hover {
-    background: rgba(30, 77, 107, 0.02);
-  }
-  
-  .activity-meta { padding-top: 2px; }
-  
-  .activity-content h3 {
-    font-size: 1rem;
-    font-weight: 400;
-    color: #1A1A1A;
-    margin: 0 0 8px 0;
-    letter-spacing: -0.01em;
-  }
-  
-  .activity-content p {
-    font-size: 0.85rem;
-    font-weight: 300;
-    color: #6B6B6B;
-    line-height: 1.7;
-    margin: 0;
-  }
-  
-  /* CTA */
-  .cta-text {
-    font-size: 1.4rem;
-    font-weight: 300;
-    color: #1A1A1A;
-    letter-spacing: -0.01em;
-    line-height: 1.5;
-    margin: 0 0 40px 0;
-    max-width: 480px;
-  }
-  
-  /* Mobile */
+
   @media (max-width: 700px) {
-    .hero-layout { 
-      flex-direction: column-reverse; 
-      gap: 32px; 
+    .work-card {
+      display: block !important;
     }
-    .hero-photo { 
-      align-self: center; 
+    .work-card > div:first-child {
+      padding: 24px 0 0 0 !important;
+      flex-direction: row !important;
+      gap: 12px !important;
+      border-bottom: none !important;
     }
-    .hero-title {
-      font-size: 2rem;
+    .work-card > div:last-child {
+      padding: 12px 0 24px 0 !important;
+      border-top: none !important;
     }
-    
-    .stats-grid {
-      grid-template-columns: repeat(2, 1fr);
+    .signal-grid > div {
+      display: block !important;
     }
-    
-    .stat-value {
-      font-size: 2rem;
+    .signal-grid > div > span:first-child {
+      padding: 14px 0 4px 0 !important;
     }
-    
-    .expertise-grid {
-      grid-template-columns: 1fr;
-      gap: 36px;
-    }
-    .expertise-item:last-child {
-      grid-column: auto;
-    }
-    
-    .activity-item {
-      grid-template-columns: 80px 1fr;
-      gap: 20px;
+    .signal-grid > div > span:last-child {
+      padding: 0 0 14px 0 !important;
+      border-top: none !important;
     }
   }
 </style>
 
 <script>
-  // Rotating identities
-  const identityElement = document.querySelector('.identity-text') as HTMLElement;
-  const identitiesData = document.querySelector('.rotating-identity')?.getAttribute('data-identities');
-  const identities: string[] = identitiesData ? JSON.parse(identitiesData) : [];
-  let currentIdentity = 0;
-  
-  function rotateIdentity() {
-    if (!identityElement || identities.length === 0) return;
-    
-    identityElement.style.opacity = '0';
-    identityElement.style.transform = 'translateY(-10px)';
-    
-    setTimeout(() => {
-      currentIdentity = (currentIdentity + 1) % identities.length;
-      identityElement.textContent = identities[currentIdentity];
-      identityElement.style.opacity = '1';
-      identityElement.style.transform = 'translateY(0)';
-    }, 300);
-  }
-  
-  setInterval(rotateIdentity, 3000);
-  
-  // Animated counter for stats
-  const statElements = document.querySelectorAll('.stat-value');
-  
-  function animateCounter(element: Element) {
-    const target = parseInt(element.getAttribute('data-value') || '0');
-    const suffix = element.getAttribute('data-suffix') || '';
-    const duration = 2000;
-    const steps = 60;
-    const stepValue = target / steps;
-    let current = 0;
-    let step = 0;
-    
-    const interval = setInterval(() => {
-      step++;
-      current = Math.min(Math.round(stepValue * step), target);
-      element.textContent = current + suffix;
-      
-      if (step >= steps) {
-        clearInterval(interval);
-        element.textContent = target + suffix;
-      }
-    }, duration / steps);
-  }
-  
-  // Intersection Observer for stats
-  const statsObserver = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        animateCounter(entry.target);
-        statsObserver.unobserve(entry.target);
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.5 });
-  
-  statElements.forEach(el => statsObserver.observe(el));
-  
-  // Parallax effect
-  const parallaxElements = document.querySelectorAll('.parallax-element');
-  
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    
-    parallaxElements.forEach(el => {
-      const speed = parseFloat(el.getAttribute('data-speed') || '0.05');
-      const yPos = scrollY * speed;
-      (el as HTMLElement).style.transform = `translateY(${yPos}px)`;
-    });
-  });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
