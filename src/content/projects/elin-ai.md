@@ -1,6 +1,6 @@
 ---
 title: "Elin.ai"
-description: "AI-powered investment management platform helping family offices and asset managers make better investment decisions through machine learning and natural language processing."
+description: "Mental wellness platform using AI to help people build digital resilience against social media manipulation. Subscription app with cognitive courses, psychological assessments, and AI-powered support."
 role: "CTO & Co-Founder"
 technologies: ["Python", "LLMs", "Machine Learning", "Azure", "React"]
 url: "https://elin.ai"
