@@ -1,91 +1,23 @@
 ---
-import { getLangFromUrl, useTranslations } from '../i18n/translations';
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-
 const currentYear = new Date().getFullYear();
 ---
 
 <footer style="border-top: 1px solid #EAEAEA; background-color: #FAFAFA;">
-  <div class="container" style="padding-top: 40px; padding-bottom: 40px;">
-
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap;">
-
-      <!-- Left: name + tagline -->
-      <div>
-        <p style="
-          font-size: 13px;
-          font-weight: 400;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: #1A1A1A;
-          margin: 0 0 6px 0;
-        ">Petr Stanislav</p>
-        <p style="
-          font-size: 12px;
-          font-weight: 300;
-          color: #999999;
-          letter-spacing: 0.05em;
-          margin: 0;
-        ">{t('hero.subtitle')}</p>
-      </div>
-
-      <!-- Right: social links -->
-      <div style="display: flex; align-items: center; gap: 24px;">
-        <a
-          href="https://www.linkedin.com/in/pstanisl/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style="
-            font-size: 12px;
-            font-weight: 400;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #999999;
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color='#1E4D6B'"
-          onmouseout="this.style.color='#999999'"
-        >
-          LinkedIn
-        </a>
-        <a
-          href="https://github.com/pstanisl"
-          target="_blank"
-          rel="noopener noreferrer"
-          style="
-            font-size: 12px;
-            font-weight: 400;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #999999;
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color='#1E4D6B'"
-          onmouseout="this.style.color='#999999'"
-        >
-          GitHub
-        </a>
-      </div>
-
+  <div class="container" style="padding-top: 32px; padding-bottom: 32px; display: flex; justify-content: space-between; align-items: center;">
+    <span style="
+      font-size: 11px;
+      font-weight: 300;
+      color: #999999;
+      letter-spacing: 0.05em;
+      font-family: 'JetBrains Mono', monospace;
+    ">&copy; {currentYear} Petr Stanislav</span>
+    <div style="display: flex; gap: 24px;">
+      <a href="https://github.com/pstanisl" target="_blank" rel="noopener noreferrer"
+        style="font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: #999999; text-decoration: none; transition: color 0.3s ease;"
+        onmouseover="this.style.color='#1E4D6B'" onmouseout="this.style.color='#999999'">GitHub</a>
+      <a href="https://www.linkedin.com/in/pstanisl/" target="_blank" rel="noopener noreferrer"
+        style="font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: #999999; text-decoration: none; transition: color 0.3s ease;"
+        onmouseover="this.style.color='#1E4D6B'" onmouseout="this.style.color='#999999'">LinkedIn</a>
     </div>
-
-    <!-- Bottom copyright -->
-    <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #EAEAEA;">
-      <p style="
-        font-size: 11px;
-        font-weight: 300;
-        color: #BBBBBB;
-        letter-spacing: 0.05em;
-        margin: 0;
-        font-family: 'JetBrains Mono', monospace;
-      ">
-        &copy; {currentYear} Petr Stanislav
-      </p>
-    </div>
-
   </div>
 </footer>
